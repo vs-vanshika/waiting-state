@@ -30,4 +30,4 @@ and emotional feedback can improve perceived waiting experience.
 Open `index.html` in any modern browser.
 
 ## Live demo
-(Add GitHub Pages link here)
+https://vs-vanshika.github.io/waiting-state/
