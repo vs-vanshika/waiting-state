@@ -25,7 +25,7 @@
 
   .loader span {
     display: inline-block;
-    animation: pulseBounce 1.5s infinite ease-in-out both;
+    animation: pulseBounce 1.0s infinite ease-in-out both;
     color: hsl(0, 100%, 80%);
     cursor: default;
     user-select: none;
@@ -59,7 +59,7 @@
     left: 50%;
     transform: translateX(-50%);
     transition: transform 0.1s;
-      animation: floatSlow 1.5s infinite ease-in-out;
+      animation: floatSlow 1.0s infinite ease-in-out;
   
 }
 
@@ -136,10 +136,11 @@ let seqIndex = 0;
 setInterval(() => {
     seqIndex = (seqIndex + 1) % sequence.length;
     eye.textContent = sequence[seqIndex];
-}, 1500);
+}, 1000);
 
 </script>
 
 </body>
 </html>
+
 
