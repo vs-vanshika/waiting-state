@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Interactive Loader</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+    margin: 0;
+    font-family: sans-serif;
+    overflow: hidden;
+  }
+
+  .loader {
+    display: flex;
+    gap: 5px;
+    font-size: 36px;
+    position: relative;
+  }
+
+  .loader span {
+    display: inline-block;
+    animation: pulseBounce 2.5s infinite ease-in-out both;
+    color: hsl(0, 100%, 80%);
+    cursor: default;
+    user-select: none;
+    position: relative;
+  }
+
+  /* Add a small delay per letter */
+  .loader span:nth-child(1) { animation-delay: 0.1s; }
+  .loader span:nth-child(2) { animation-delay: 0.2s; }
+  .loader span:nth-child(3) { animation-delay: 0.3s; }
+  .loader span:nth-child(4) { animation-delay: 0.4s; }
+  .loader span:nth-child(5) { animation-delay: 0.5s; }
+  .loader span:nth-child(6) { animation-delay: 0.6s; }
+  .loader span:nth-child(7) { animation-delay: 0.7s; }
+  .loader span:nth-child(8) { animation-delay: 0.8s; }
+
+  @keyframes pulseBounce {
+    0%, 80%, 100% { transform: translateY(0) scale(0.8); color: hsl(0, 80%, 70%); }
+    40% { transform: translateY(-12px) scale(1.1); color: hsl(200, 80%, 70%); }
+  }
+@keyframes floatSlow {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.25); }
+}
+
+  /* Emoji eyes */
+.eye {
+    font-size: 32px;
+    position: absolute;
+    top: calc(50% - 60px); /* roughly above the loader */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: transform 0.1s;
+      animation: floatSlow 2.5s infinite ease-in-out;
+  
+}
+
+  /* Spark particles */
+  .spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="loader">
+  <span class="letter">L</span>
+<span class="letter">O</span>
+<span class="letter">A</span>
+<span class="letter target">D
+  <div class="eye">⏳</div> </span> <!-- target letter -->
+<span class="letter">I</span>
+<span class="letter">N</span>
+<span class="letter">G</span>
+<span class="letter">…</span>
+
+  
+</div>
+
+
+
+
+<script>
+const loader = document.querySelector('.loader');
+const eye = document.querySelector('.eye');
+
+// Spark creation
+function createSpark(x, y) {
+  const spark = document.createElement('div');
+  spark.className = 'spark';
+  spark.style.left = x + 'px';
+  spark.style.top = y + 'px';
+  document.body.appendChild(spark);
+  let size = Math.random() * 6 + 4;
+  spark.style.width = size + 'px';
+  spark.style.height = size + 'px';
+  spark.style.opacity = 1;
+
+  setTimeout(() => {
+    spark.style.transition = 'all 0.6s ease-out';
+    spark.style.transform = `translate(${(Math.random()-0.5)*30}px, ${(Math.random()-0.5)*30}px)`;
+    spark.style.opacity = 0;
+  }, 50);
+
+  setTimeout(() => spark.remove(), 700);
+}
+
+// Spark on letter pulse
+const letters = loader.querySelectorAll('span');
+letters.forEach(letter => {
+  letter.addEventListener('animationiteration', () => {
+    const rect = letter.getBoundingClientRect();
+    createSpark(rect.left + rect.width/2, rect.top + rect.height/2);
+  });
+});
+
+// Emoji eyes follow cursor
+// Emoji loading sequence
+const sequence = ['⏳','🤔','☹️','😓','⏳'];
+let seqIndex = 0;
+
+setInterval(() => {
+    seqIndex = (seqIndex + 1) % sequence.length;
+    eye.textContent = sequence[seqIndex];
+}, 2500);
+
+</script>
+
+</body>
+</html>
